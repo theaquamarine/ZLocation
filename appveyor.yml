@@ -1,5 +1,3 @@
-version: 1.0.0.{build}
-
 image:
 - Visual Studio 2015
 - Visual Studio 2017
@@ -9,6 +7,9 @@ image:
 
 install:
   - ps: Install-Module Pester -Scope CurrentUser -Force
+  - ps: |
+      $psd = Import-PowerShellDataFile .\ZLocation\ZLocation.psd1
+      Update-AppveyorBuild -Version "$($psd.ModuleVersion).$($env:APPVEYOR_BUILD_NUMBER)"
 
 build: false
 
